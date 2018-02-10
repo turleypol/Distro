@@ -28,6 +28,7 @@ before_script:
   - cmake ../..
   - make -j 2
   - cp ../bin/ecompile ../../../scripts/
+  - cp ../support/scripts/*.em ../../../scripts/
   - cd ../../../
   - echo "ModuleDirectory=scripts" >>scripts/ecompile.cfg
   - echo "IncludeDirectory=scripts" >>scripts/ecompile.cfg
