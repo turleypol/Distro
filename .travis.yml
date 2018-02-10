@@ -4,31 +4,42 @@ git:
   depth: 1
 services:
   - docker
-#matrix:
-#  include:
-#    - os: linux
-#      compiler: gcc
-#      addons:
-#        apt:
-#          sources: ['ubuntu-toolchain-r-test']
-#          packages: ['g++-7', 'libstdc++6', 'libstdc++-6-dev', 'libstdc++6-dbg']
+matrix:
+  include:
+    - os: linux
+      compiler: gcc
+      addons:
+        apt:
+          sources: ['ubuntu-toolchain-r-test']
+          packages: ['g++-7']
+      env: CXX_P=g++-7 CC_P=gcc-7
 
 before_script:
-  - docker pull ubuntu:16.04
   - echo 'Configure...' && echo -en 'travis_fold:start:script.configure\\r'
-  - docker wget http://pol.uo.hyeah.pl/upload/core/polserver099-LINUX-2018-02-09.zip
-  - docker unzip polserver099-LINUX-2018-02-09.zip
-  - docker cp -Rf polserver099-LINUX-2018-02-09/* .
-  - docker echo "ModuleDirectory=scripts" >>scripts/ecompile.cfg
-  - docker echo "IncludeDirectory=scripts" >>scripts/ecompile.cfg
-  - docker echo "PolScriptRoot=scripts" >>scripts/ecompile.cfg
-  - docker echo "PackageRoot=pkg" >>scripts/ecompile.cfg
-  - docker echo -en 'travis_fold:end:script.configure\\r'
+  - wget https://github.com/polserver/polserver/archive/master.zip
+  - unzip master.zip
+  - cd polserver/pol-core/bin-build
+  - rm ../CMakeList.txt
+  - echo "add_subdirectory(clib)" >> ../CMakeList.txt
+  - echo "add_subdirectory(bscript)" >> ../CMakeList.txt
+  - echo "add_subdirectory(plib)" >> ../CMakeList.txt
+  - echo "add_subdirectory(ecompile)" >> ../CMakeList.txt
+  - export CXX=$CXX_P
+  - export CC=$CC_P
+  - cmake ../..
+  - make -j 2
+  - cp ../bin/ecompile ../../../scripts/
+  - cd ../../../
+  - echo "ModuleDirectory=scripts" >>scripts/ecompile.cfg
+  - echo "IncludeDirectory=scripts" >>scripts/ecompile.cfg
+  - echo "PolScriptRoot=scripts" >>scripts/ecompile.cfg
+  - echo "PackageRoot=pkg" >>scripts/ecompile.cfg
+  - echo -en 'travis_fold:end:script.configure\\r'
 
 script:
-  - docker echo 'Build...' && echo -en 'travis_fold:start:script.build\\r'
-  - docker scripts/ecompile -AT
-  - docker echo -en 'travis_fold:end:script.build\\r'
+  - echo 'Build...' && echo -en 'travis_fold:start:script.build\\r'
+  - scripts/ecompile -AT
+  - echo -en 'travis_fold:end:script.build\\r'
 
 
 notifications:
