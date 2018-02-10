@@ -17,7 +17,7 @@ before_script:
   - echo 'Configure...' && echo -en 'travis_fold:start:script.configure\\r'
   - wget https://github.com/polserver/polserver/archive/master.zip
   - unzip master.zip
-  - cd polserver/pol-core/bin-build
+  - cd polserver-master/pol-core/bin-build
   - rm ../CMakeList.txt
   - echo "add_subdirectory(clib)" >> ../CMakeList.txt
   - echo "add_subdirectory(bscript)" >> ../CMakeList.txt
