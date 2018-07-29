@@ -29,6 +29,7 @@ before_script:
   - echo "IncludeDirectory=scripts" >>scripts/ecompile.cfg
   - echo "PolScriptRoot=scripts" >>scripts/ecompile.cfg
   - echo "PackageRoot=pkg" >>scripts/ecompile.cfg
+  - echo "DisplaySummary=1" >>scripts/ecompile.cfg
   - echo -en 'travis_fold:end:script.configure\\r'
 
 script:
