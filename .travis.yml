@@ -36,7 +36,7 @@ before_script:
 
 script:
   - echo 'Build...' && echo -en 'travis_fold:start:script.build\\r'
-  - scripts/ecompile -A -T
+  - scripts/ecompile -A -T2
   - echo -en 'travis_fold:end:script.build\\r'
 
 
