@@ -20,11 +20,11 @@ before_script:
   - cd polserver-master/bin-build
   - export CXX=$CXX_P
   - export CC=$CC_P
-  - cmake -DBUILD_ALL=OFF -DONLY_ECOMPILE=ON ../..
+  - cmake -DBUILD_ALL=OFF -DONLY_ECOMPILE=ON ..
   - make -j 2
-  - cp ../bin/ecompile ../../../scripts/
-  - cp ../support/scripts/*.em ../../../scripts/
-  - cd ../../../
+  - cp ../bin/ecompile ../../scripts/
+  - cp ../pol-core/support/scripts/*.em ../../scripts/
+  - cd ../../
   - echo "ModuleDirectory=scripts" >>scripts/ecompile.cfg
   - echo "IncludeDirectory=scripts" >>scripts/ecompile.cfg
   - echo "PolScriptRoot=scripts" >>scripts/ecompile.cfg
