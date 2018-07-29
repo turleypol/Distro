@@ -30,11 +30,13 @@ before_script:
   - echo "PolScriptRoot=scripts" >>scripts/ecompile.cfg
   - echo "PackageRoot=pkg" >>scripts/ecompile.cfg
   - echo "DisplaySummary=1" >>scripts/ecompile.cfg
+  - echo "DisplayWarnings=1" >>scripts/ecompile.cfg
+  - echo "CompileAspPages=1" >>scripts/ecompile.cfg
   - echo -en 'travis_fold:end:script.configure\\r'
 
 script:
   - echo 'Build...' && echo -en 'travis_fold:start:script.build\\r'
-  - scripts/ecompile -AT
+  - scripts/ecompile -A -T
   - echo -en 'travis_fold:end:script.build\\r'
 
 
